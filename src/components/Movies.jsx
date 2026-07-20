@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 function Movies() {
 
-    const { category } = useParams()
+    const { category, genreId, genreName } = useParams()
     const [movies, setMovies] = useState([])
     const [totalPages, setTotalPages] = useState(1);
 
@@ -29,16 +29,27 @@ function Movies() {
             else {
                 url = `movie/${category}`
             }
-            const res = await fetch(
-                `https://api.themoviedb.org/3/${url}?api_key=${API_KEY}&page=${page}`
-            )
-            const data = await res.json();
-            setMovies(data.results);
-            setTotalPages(data.total_pages)
+
+            if (genreId) {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&page=${page}`
+                )
+                const data = await res.json();
+                setMovies(data.results);
+                setTotalPages(data.total_pages)
+            }
+            else {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/${url}?api_key=${API_KEY}&page=${page}`
+                )
+                const data = await res.json();
+                setMovies(data.results);
+                setTotalPages(data.total_pages)
+            }
         }
         getCategories(category);
 
-    }, [category, page])
+    }, [category, page, genreId])
 
 
     return (
@@ -46,7 +57,9 @@ function Movies() {
             <div className="max-w-7xl mx-auto">
 
                 <h1 className="text-4xl font-bold mb-8">
-                    {category.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase())}
+                    {genreName
+                        ? genreName
+                        : category ? category.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase()) : "Genre Movies"}
                 </h1>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">

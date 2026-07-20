@@ -142,19 +142,17 @@ function CategoryNav() {
                                 Genres
                             </button>
 
-
                             {
                                 showGenres && (
                                     <div
                                         className="absolute top-full left-0 w-56 bg-[#111827] border border-[#334155] rounded-xl shadow-2xl p-3 z-50 "
                                     >
-
                                         {
                                             item.genres.map((genre) => (
 
                                                 <button
                                                     key={genre.id}
-                                                    onClick={() => navigate(`/genre/${genre.id}`)}
+                                                    onClick={() => navigate(`/${path}/genre/${genre.id}/${genre.name}`)}
                                                     className="w-full text-left px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#3B82F6] transition duration-200 " onMouseEnter={() => setShowGenres(true)}
                                                 >
                                                     {genre.name}

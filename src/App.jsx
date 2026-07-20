@@ -21,9 +21,9 @@ function App() {
       <CategoryNav />
       <Routes>
 
-        <Route 
-        path="/" 
-        element={<Home searchResults={searchResults} />} />
+        <Route
+          path="/"
+          element={<Home searchResults={searchResults} />} />
 
         <Route
           path="/movie/:movieId"
@@ -40,18 +40,39 @@ function App() {
           element={<Movies />}
         />
 
-        <Route path="/tv-shows" element={<TvShows />} />
+        <Route
+          path="/movies/genre/:genreId"
+          element={<Movies />}
+        />
+        <Route
+          path="/movies/genre/:genreId/:genreName"
+          element={<Movies />}
+        />
+
+        <Route
+          path="/tv-shows"
+          element={<TvShows />}
+        />
 
         <Route
           path="/tv-shows/:category"
-          element={<TvShows searchResults={searchResults}/>}
+          element={<TvShows searchResults={searchResults} />}
+        />
+
+        <Route
+          path="/tv-shows/genre/:genreId"
+          element={<TvShows />}
+        />
+        <Route
+          path="/tv-shows/genre/:genreId/:genreName"
+          element={<TvShows />}
         />
 
         <Route
           path="/tv-show/:showId"
           element={<ShowDetails />}
         />
-      
+
       </Routes>
       <Footer />
 

@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 function TvShows() {
 
-    const { category = "popular" } = useParams();
+    const { category = "popular", genreId, genreName } = useParams();
     const [show, setShow] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get("page")) || 1;
@@ -23,18 +23,29 @@ function TvShows() {
             else {
                 url = `tv/${category}`
             }
-            const res = await fetch(
-                `https://api.themoviedb.org/3/${url}?api_key=${API_KEY}&page=${page}`
-            )
-            const data = await res.json();
-            setShow(data.results || []);
-            setTotalPages(data.total_pages)
+
+            if (genreId) {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&with_genres=${genreId}&page=${page}`
+                )
+                const data = await res.json();
+                setShow(data.results || []);
+                setTotalPages(data.total_pages)
+            }
+            else {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/${url}?api_key=${API_KEY}&page=${page}`
+                )
+                const data = await res.json();
+                setShow(data.results || []);
+                setTotalPages(data.total_pages)
+            }
         }
         getCategories(category)
 
-        
 
-    }, [category, page])
+
+    }, [category, page, genreId])
 
 
     return (
@@ -42,7 +53,9 @@ function TvShows() {
             <div className="max-w-7xl mx-auto">
 
                 <h1 className="text-4xl font-bold mb-8">
-                    {category?.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase())}
+                    {genreName
+                        ? genreName
+                        : category?.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase())}
                 </h1>
 
 

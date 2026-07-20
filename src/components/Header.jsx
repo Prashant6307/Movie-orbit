@@ -51,7 +51,9 @@ function Header({ setSearchResults }) {
                             Movies
                         </Link>
                         </li>
-                        <li>TV Shows</li>
+                        <li><Link to="/tv-shows" onClick={() => setMenuOpen(false)}>
+                            TV Shows
+                        </Link></li>
                     </ul>
                 }
 
