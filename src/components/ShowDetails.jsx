@@ -1,0 +1,230 @@
+import { useNavigate, useParams } from "react-router-dom"
+import { API_KEY } from "../api/tmdb"
+import { useEffect, useRef, useState } from "react"
+import "../App.css"
+import play_btn from "../images/play-btn.png"
+
+function ShowDetails() {
+    const [details, setDetails] = useState(null)
+    const [cast, setCast] = useState([])
+    const [trailer, setTrailer] = useState(null)
+    const [similarShows, setSimilarShows] = useState([])
+    const [showTrailer, setShowTrailer] = useState(false)
+
+    const { showId } = useParams()
+    const navigate = useNavigate()
+    const carouselRef = useRef()
+    const similarRef = useRef()
+
+
+
+
+    // const playTrailer = () => {
+    //     window.open(`https://youtube.com/watch?v=${trailer.key}`)
+    // }
+
+
+    useEffect(() => {
+        const fetchShowDetails = async (showId) => {
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${showId}?api_key=${API_KEY}`)
+            const data = await res.json()
+            setDetails(data)
+        }
+        fetchShowDetails(showId)
+
+        const getCast = async (showId) => {
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${showId}/credits?api_key=${API_KEY}`)
+            const data = await res.json()
+            setCast(data)
+        }
+        getCast(showId)
+
+        const getTrailer = async (showId) => {
+            const videoRes = await fetch(
+                `https://api.themoviedb.org/3/tv/${showId}/videos?api_key=${API_KEY}`
+            )
+
+            const videoData = await videoRes.json()
+
+            const movieTrailer = videoData.results?.find(
+                video => video.type === "Trailer" && video.site === "YouTube"
+            )
+
+            setTrailer(movieTrailer)
+        }
+        getTrailer(showId)
+
+        const getSimilarShows = async (showId) => {
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${showId}/similar?api_key=${API_KEY}`)
+            const data = await res.json()
+            setSimilarShows(data)
+            
+        }
+        getSimilarShows(showId)
+
+    }, [showId])
+
+    return (
+        <div className="bg-[#070B14] ">
+            {details && (
+                <div className="max-w-7xl mx-auto">
+                    <div className="relative flex aspect-video">
+
+                        {
+                            showTrailer && trailer ? (<>
+                                <button
+                                    onClick={() => setShowTrailer(false)}
+                                    className="absolute top-4 right-4 z-10 text-white text-3xl bg-transparent border border-[#64748B] hover:border-[#8B5CF6]"
+                                >
+                                    ✕
+                                </button>
+                                <iframe
+                                    src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+                                    title="Trailer"
+                                    className="w-full h-full"
+                                    allow="autoplay; fullscreen"
+                                />
+                            </>
+                            ) : (
+                                <>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w1280${details.backdrop_path}`}
+                                        alt={details.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute p-4 text-gray font-bold bg-gradient-to-r from-[#070B14] via-[#070B14]/70 to-transparent text-gray-200 h-full ">
+                                        <p className=" text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wide drop-shadow-2xl">{details.name}</p>
+                                        <div className="flex items-center gap-8 my-12 text-3xl">
+                                            <p>⭐{(details.vote_average)?.toFixed(1)}</p>
+
+                                            {
+                                                details.production_companies?.[0]?.logo_path && (
+                                                    <img src={`https://image.tmdb.org/t/p/w200${details.production_companies?.[0].logo_path}`} alt="" className="max-w-12 bg-white m-1" />)
+                                            }
+
+                                            <p>
+                                                {details.number_of_seasons} Seasons
+                                            </p>
+                                        </div>
+                                        <p className="max-w-[50%] text-[8px] sm:text-sm md:text-lg lg:text-xl ">{details.overview}</p>
+
+
+                                        <button onClick={() => setShowTrailer(true)} className="flex items-center mt-4 text-lg border-[2px] border-[#1E293B] pl-0 p-2 rounded-xl cursor-pointer">
+                                            <img src={play_btn} alt="" className="w-20 " />
+                                            Watch Trailer</button>
+                                    </div>
+                                </>
+                            )
+                        }
+
+                    </div>
+
+                    <div className="relative p-4">
+                        <h2 className="text-white font-bold text-xl mt-8 mb-4">Cast & Characters</h2>
+                        <div ref={carouselRef} className=" flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth ">
+
+                            {
+                                cast.cast?.filter((actor) => actor.profile_path).map((actor) => (
+                                    <div
+                                        key={actor.id}
+                                        className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"
+                                    >
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                                            alt={actor.name}
+                                            className="w-full h-48 object-cover"
+                                        />
+
+                                        <p className="p-2 font-bold">
+                                            {actor.name}
+                                        </p>
+
+                                        <p className="px-2 text-sm text-gray-400">
+                                            {actor.character}
+                                        </p>
+                                    </div>
+                                ))
+                            }
+
+                        </div>
+                        <button
+                            onClick={() => {
+                                carouselRef.current.scrollLeft -= 300
+                            }}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 ml-4 text-center pb-1">
+                            ←
+                        </button>
+                        <button
+                            onClick={() => {
+                                carouselRef.current.scrollLeft += 300
+                            }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 mr-4 text-center pb-1">
+                            →
+                        </button>
+                    </div>
+
+
+
+                    <div className="relative p-4" >
+                        <h2 className="text-white font-bold text-xl mt-8 ">
+                            {
+                            similarShows.results?.length === 0 ? "No similar shows found" : "Similar Shows"
+                        }</h2>
+                        <div ref={similarRef} className="mt-8 flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth " >
+
+                            {
+                                similarShows.results?.filter((result) => result.poster_path).map((result) => (
+                                    <div onClick={() => navigate(`/tv-show/${result.id}`)}
+                                        key={result.id}
+                                        className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"
+                                    >
+
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/w185${result.poster_path}`}
+                                            alt={result.name}
+                                            className="w-full h-48 object-cover"
+                                        />
+
+                                        <p className="p-2 font-bold text-gray-300">
+                                            {result.name}
+                                        </p>
+
+
+                                        <div className="px-1 py-2">
+                                            <p className=" px-2 text-sm text-gray-400">
+                                                Rating: ⭐{(result.vote_average)?.toFixed(1)}
+                                            </p>
+                                            <p className="px-2 text-sm text-gray-400">
+                                                Release: {(result.first_air_date)}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                ))
+                            }
+
+                        </div>
+                        <button
+                            onClick={() => {
+                                similarRef.current.scrollLeft -= 300
+                            }}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 ml-4 text-center pb-1">
+                            ←
+                        </button>
+                        <button
+                            onClick={() => {
+                                similarRef.current.scrollLeft += 300
+                            }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 mr-4 text-center pb-1">
+                            →
+                        </button>
+                    </div>
+                </div>
+            )
+
+            }
+        </div>
+    )
+}
+
+export default ShowDetails
