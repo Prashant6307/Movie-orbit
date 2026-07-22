@@ -35,16 +35,16 @@ function Header({ setSearchResults }) {
                         if (e.key === "Enter") {
                             handleSearch(searchValue)
                         }
-                    }} />
+                    }} placeholder="Want to find something!"/>
                     <FaSearch onClick={() => handleSearch(searchValue)} className="text-[#60A5FA] mx-2" />
                 </div>
                 {
-                    menuOpen ? <FaTimes onClick={() => setMenuOpen(false)} className="md:hidden w-4 size-14" /> : <FaBars onClick={() => setMenuOpen(true)} className="md:hidden min-w-4 size-4" />
+                    menuOpen ? <FaTimes onClick={() => setMenuOpen(false)} className="md:hidden w-4 size-12" /> : <FaBars onClick={() => setMenuOpen(true)} className="md:hidden min-w-4 size-4" />
                 }
 
                 {
                     menuOpen && <ul className="md:hidden absolute top-20 right-4 bg-white flex flex-col  gap-4 text-black p-4 rounded-md z-100  ">
-                        <li><Link to="/" onClick={() => setMenuOpen(false)}>
+                        <li><Link to="/movies/popular" onClick={() => setMenuOpen(false)}>
                             Home
                         </Link></li>
                         <li><Link to="/" onClick={() => setMenuOpen(false)}>
@@ -59,7 +59,7 @@ function Header({ setSearchResults }) {
 
                 <ul className="hidden md:flex items-center gap-8 text-[#CBD5E1] ">
                     <li className="hover:text-[#60A5FA]">
-                        <Link to="/" onClick={() => setMenuOpen(false)}>
+                        <Link to="/movies/popular" onClick={() => setMenuOpen(false)}>
                             Home
                         </Link>
                     </li>

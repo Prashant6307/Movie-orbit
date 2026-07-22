@@ -55,7 +55,7 @@ function TvShows() {
                 <h1 className="text-4xl font-bold mb-8">
                     {genreName
                         ? genreName
-                        : category?.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase())}
+                        : category?.replace("_", " ").replace(/\b\w/g, char => char.toUpperCase()) }
                 </h1>
 
 

@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react"
 import logo_bg from "../images/logo-bg.png"
-
+import { Link, useLocation } from "react-router-dom";
 
 const taglines = [
-        "Explore the universe of movies",
-        "Your galaxy of entertainment",
-        "Discover movies beyond the ordinary",
-        "Orbit through endless stories"
-    ]
+    "Explore the universe of movies",
+    "Your galaxy of entertainment",
+    "Discover movies beyond the ordinary",
+    "Orbit through endless stories"
+]
 
 function Footer() {
 
     const [tagline, setTagline] = useState("")
     const [index, setIndex] = useState(0)
+
+    const location = useLocation();
+
+    const isMoviePage = location.pathname.startsWith("/movies");
+    const isTVPage = location.pathname.startsWith("/tv-shows");
 
     useEffect(() => {
         let i = 0
@@ -63,11 +68,78 @@ function Footer() {
                 <div className="grid grid-cols-4 mt-12">
                     <div>
                         <h3 className="text-2xl mb-8">Discover</h3>
-                        <p className="text-[#94A3B8] hover:text-[#60A5FA]">New Releases</p>
-                        <p>Recommended</p>
-                        <p>Action</p>
-                        <p>Comedy</p>
-                        <p>Sci-Fi</p>
+                        <Link
+                            to="/movies/popular"
+                            className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                        >
+                            Home
+                        </Link>
+                        {
+                            isMoviePage && (
+                                <>
+                                    <Link
+                                        to="/movies/upcoming"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        New Releases
+                                    </Link>
+
+                                    <Link
+                                        to="/movies/top_rated"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Recommended
+                                    </Link>
+
+                                    <Link
+                                        to="/movies/genre/28/Action"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Action
+                                    </Link>
+
+                                    <Link
+                                        to="/movies/genre/35/Comedy"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Comedy
+                                    </Link>
+
+                                    <Link
+                                        to="/movies/genre/878/Sci-Fi"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Sci-Fi
+                                    </Link>
+                                </>
+                            )
+                        }
+                        {
+                            isTVPage && (
+                                <>
+                                    <Link
+                                        to="/tv-shows/genre/10759/Action%20%26%20Adventure"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Action & Adventure
+                                    </Link>
+
+                                    <Link
+                                        to="/tv-shows/genre/35/Comedy"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Comedy
+                                    </Link>
+
+                                    <Link
+                                        to="/tv-shows/genre/10765/Sci-Fi%20%26%20Fantasy"
+                                        className="block text-[#94A3B8] hover:text-[#60A5FA]"
+                                    >
+                                        Sci-Fi & Fantasy
+                                    </Link>
+                                </>
+                            )
+                        }
                     </div>
                     <div>
                         <h3 className="text-2xl mb-8">Support</h3>

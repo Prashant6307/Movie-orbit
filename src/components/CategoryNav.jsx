@@ -145,7 +145,7 @@ function CategoryNav() {
                             {
                                 showGenres && (
                                     <div
-                                        className="absolute top-full left-0 w-56 bg-[#111827] border border-[#334155] rounded-xl shadow-2xl p-3 z-50 "
+                                        className="absolute top-full -left-10 sm:-left-20 max-w-max bg-[#111827] border border-[#334155] rounded-xl shadow-2xl p-3 z-50 text-sm md:text-md lg:text-lg md:pr-2"
                                     >
                                         {
                                             item.genres.map((genre) => (
