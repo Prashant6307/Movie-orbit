@@ -83,10 +83,10 @@ function MovieDetails() {
                                         alt={details.title}
                                         className="w-full h-full object-cover"
                                     />
-                                    <div className="absolute p-4 text-gray font-bold bg-gradient-to-r from-[#070B14] via-[#070B14]/70 to-transparent text-gray-200 h-full ">
-                                        <p className=" text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wide drop-shadow-2xl">{details.title}</p>
+                                    <div className="absolute px-4 pt-1 text-gray font-bold bg-gradient-to-r from-[#070B14] via-[#070B14]/70 to-transparent text-gray-200 h-full ">
+                                        <p className="text-white text-xl sm:text-5xl md:text-3xl lg:text-7xl font-extrabold tracking-wide drop-shadow-2xl">{details.title}</p>
 
-                                        <div className="flex items-center gap-8 my-12 text-3xl">
+                                        <div className="flex items-center gap-4 my-2 text-sx sm:text-sm sm:my-4  md:text-md md:my-8 lg:text-xl">
                                             <p>⭐{(details.vote_average).toFixed(1)}</p>
 
                                             <img src={`https://image.tmdb.org/t/p/w200${details.production_companies[0]?.logo_path}`} alt="" className="max-w-12 bg-white m-1" />
@@ -94,11 +94,30 @@ function MovieDetails() {
                                             <p>{details.runtime && (details.runtime / 60).toFixed(1)}hrs</p>
                                         </div>
 
-                                        <p className="max-w-[50%] max-h-24 overflow-y-scroll scrollbar-hide text-[8px] sm:text-sm md:text-lg lg:text-xl ">{details.overview}</p>
+                                        <div className="flex items-center justify-between max-w-[90%] md:block">
 
-                                        <button onClick={() => setShowTrailer(true)} className="flex items-center mt-4 text-lg border-[2px] border-[#1E293B] pl-0 p-2 rounded-xl cursor-pointer">
-                                            <img src={play_btn} alt="" className="w-20 " />
-                                            Watch Trailer</button>
+                                            <div
+                                                className=" max-w-[60%] sm:max-w-[50%] text-[8px]  sm:text-sm  md:text-md  lg:text-xl max-h-20 sm:max-h-none overflow-auto scrollbar-hide "
+                                            >
+                                                {details.overview}
+                                            </div>
+
+
+                                            <button
+                                                onClick={() => setShowTrailer(true)}
+                                                className=" flex items-start gap-2 text-[8px] sm:text-sm border-[2px] border-[#1E293B] p-2 rounded-xl cursor-pointer ml-2 bg-gray-900/25 md:mt-8 md:ml-0"
+                                            >
+                                                <img
+                                                    src={play_btn}
+                                                    alt=""
+                                                    className="w-5 sm:w-6"
+                                                />
+                                                
+                                                Watch Trailer
+
+                                            </button>
+
+                                        </div>
                                     </div>
                                 </>
                             )

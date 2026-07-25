@@ -27,19 +27,19 @@ function Header({ setSearchResults }) {
             <div className="flex justify-between items-center font-bold gap-4  px-4 py-4 sm:px-2 sm:py-2 max-w-7xl mx-auto">
                 <div className="">
                     <Link to="/" onClick={() => setMenuOpen(false)}>
-                        <img className="max-w-16" src={logo} alt="app logo" />
+                        <img className="w-10 sm:w-12 md:w-16" src={logo} alt="app logo" />
                     </Link>
                 </div>
                 <div className="flex items-center gap-2 bg-[#111827] border-[2px] border-[#334155]  focus:[#3B82F6] rounded-xl cursor-pointer">
-                    <input className="flex w-28 sm:w-36 md:w-92 max-h-8 focus:outline-none text-white px-2 py-1" type="text" onChange={(e) => setSearchValue(e.target.value)} onKeyDown={(e) => {
+                    <input className="flex w-40 sm:w-56 md:w-92 max-h-8 focus:outline-none text-white px-2 sm:py-1 placeholder:text-xs sm:placeholder:text-base" type="text" onChange={(e) => setSearchValue(e.target.value)} onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             handleSearch(searchValue)
                         }
-                    }} placeholder="Want to find something!"/>
-                    <FaSearch onClick={() => handleSearch(searchValue)} className="text-[#60A5FA] mx-2" />
+                    }} placeholder="Looking for something!"/>
+                    <FaSearch onClick={() => handleSearch(searchValue)} className="text-[#60A5FA] mx-2 " />
                 </div>
                 {
-                    menuOpen ? <FaTimes onClick={() => setMenuOpen(false)} className="md:hidden w-4 size-12" /> : <FaBars onClick={() => setMenuOpen(true)} className="md:hidden min-w-4 size-4" />
+                    menuOpen ? <FaTimes onClick={() => setMenuOpen(false)} className="md:hidden min-w-4 size-4" /> : <FaBars onClick={() => setMenuOpen(true)} className="md:hidden min-w-4 size-4" />
                 }
 
                 {
@@ -47,7 +47,7 @@ function Header({ setSearchResults }) {
                         <li><Link to="/movies/popular" onClick={() => setMenuOpen(false)}>
                             Home
                         </Link></li>
-                        <li><Link to="/" onClick={() => setMenuOpen(false)}>
+                        <li><Link to="/movies/trending" onClick={() => setMenuOpen(false)}>
                             Movies
                         </Link>
                         </li>
@@ -64,7 +64,7 @@ function Header({ setSearchResults }) {
                         </Link>
                     </li>
                     <li className="hover:text-[#60A5FA]">
-                        <Link to="/" onClick={() => setMenuOpen(false)}>
+                        <Link to="/movies/trending" onClick={() => setMenuOpen(false)}>
                             Movies
                         </Link>
                     </li>

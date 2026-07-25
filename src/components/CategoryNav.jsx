@@ -137,7 +137,7 @@ function CategoryNav() {
                         >
 
                             <button
-                                className="px-2 sm:px-4 py-2 cursor-pointer font-bold text-sm md:text-lg lg:text-2xl text-gray-400"
+                                className="px-2 sm:px-4 py-2 cursor-pointer font-bold text-[10px]  sm:text-[16px] md:text-lg lg:text-2xl text-gray-400"
                             >
                                 Genres
                             </button>
@@ -172,7 +172,7 @@ function CategoryNav() {
                         <button
                             key={item.value}
                             onClick={() => navigate(`/${path}/${item.value}`)}
-                            className={`px-2 sm:px-4 py-2 cursor-pointer font-bold text-sm md:text-lg lg:text-2xl ${category === item.value
+                            className={`px-2 sm:px-4 py-2 cursor-pointer font-bold text-[10px]  sm:text-[16px] md:text-lg lg:text-2xl ${category === item.value
                                     ? "text-purple-500"
                                     : "text-gray-400"
                                 }`}

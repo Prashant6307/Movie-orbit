@@ -19,7 +19,7 @@ function Pagination({ page, setSearchParams, totalPages }) {
     }
 
     return (
-        <div className="flex justify-between text-white my-8">
+        <div className="flex justify-between text-white my-8 text-xs">
             <button onClick={() => previousPage()} className="bg-[#161D2F] border border-[#1E293B] text-[#CBD5E1] px-5 py-2 rounded-lg font-bold hover:bg-[#8B5CF6]hover:text-white transition">Previous</button>
 
             <span
