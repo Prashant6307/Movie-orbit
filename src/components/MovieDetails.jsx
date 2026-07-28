@@ -112,7 +112,7 @@ function MovieDetails() {
                                                     alt=""
                                                     className="w-5 sm:w-6"
                                                 />
-                                                
+
                                                 Watch Trailer
 
                                             </button>
@@ -124,50 +124,51 @@ function MovieDetails() {
                         }
 
                     </div>
+                    {cast?.cast?.length > 0 && (
+                        <div className="relative p-4">
+                            <h2 className="text-white font-bold text-xl mt-8 mb-4">Cast & Characters</h2>
+                            <div ref={carouselRef} className=" flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth ">
 
-                    <div className="relative p-4">
-                        <h2 className="text-white font-bold text-xl mt-8 mb-4">Cast & Characters</h2>
-                        <div ref={carouselRef} className=" flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth ">
+                                {
+                                    cast.cast?.filter((actor) => actor.profile_path).map((actor) => (
+                                        <div
+                                            key={actor.id}
+                                            className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"
+                                        >
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                                                alt={actor.name}
+                                                className="w-full h-48 object-cover"
+                                            />
 
-                            {
-                                cast.cast?.filter((actor) => actor.profile_path).map((actor) => (
-                                    <div
-                                        key={actor.id}
-                                        className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"
-                                    >
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                                            alt={actor.name}
-                                            className="w-full h-48 object-cover"
-                                        />
+                                            <p className="p-2 font-bold">
+                                                {actor.name}
+                                            </p>
 
-                                        <p className="p-2 font-bold">
-                                            {actor.name}
-                                        </p>
+                                            <p className="px-2 text-sm text-gray-400">
+                                                {actor.character}
+                                            </p>
+                                        </div>
+                                    ))
+                                }
 
-                                        <p className="px-2 text-sm text-gray-400">
-                                            {actor.character}
-                                        </p>
-                                    </div>
-                                ))
-                            }
-
+                            </div>
+                            <button
+                                onClick={() => {
+                                    carouselRef.current.scrollLeft -= 300
+                                }}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 ml-4 text-center pb-1">
+                                ←
+                            </button>
+                            <button
+                                onClick={() => {
+                                    carouselRef.current.scrollLeft += 300
+                                }}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 mr-4 text-center pb-1">
+                                →
+                            </button>
                         </div>
-                        <button
-                            onClick={() => {
-                                carouselRef.current.scrollLeft -= 300
-                            }}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 ml-4 text-center pb-1">
-                            ←
-                        </button>
-                        <button
-                            onClick={() => {
-                                carouselRef.current.scrollLeft += 300
-                            }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 text-3xl text-white hover:bg-black/65 bg-black/45 rounded-full h-12 w-12 mr-4 text-center pb-1">
-                            →
-                        </button>
-                    </div>
+                    )}
 
 
 

@@ -30,7 +30,7 @@ function Header({ setSearchResults }) {
                         <img className="w-10 sm:w-12 md:w-16" src={logo} alt="app logo" />
                     </Link>
                 </div>
-                <div className="flex items-center gap-2 bg-[#111827] border-[2px] border-[#334155]  focus:[#3B82F6] rounded-xl cursor-pointer">
+                <div className="flex items-center gap-2 bg-[#111827] border-[2px] border-[#334155]  focus-within:border-[#3B82F6] rounded-xl cursor-pointer">
                     <input className="flex w-40 sm:w-56 md:w-92 max-h-8 focus:outline-none text-white px-2 sm:py-1 placeholder:text-xs sm:placeholder:text-base" type="text" onChange={(e) => setSearchValue(e.target.value)} onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             handleSearch(searchValue)

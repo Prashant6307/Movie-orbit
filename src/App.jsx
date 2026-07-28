@@ -9,6 +9,7 @@ import Movies from "./components/Movies";
 import CategoryNav from "./components/CategoryNav";
 import TvShows from "./components/TvShows";
 import ShowDetails from "./components/ShowDetails";
+import Signup from "./components/Signup";
 
 
 
@@ -23,6 +24,9 @@ function App() {
 
         <Route
           path="/"
+          element={<Signup />} />
+        <Route
+          path="/home"
           element={<Home searchResults={searchResults} />} />
 
         <Route

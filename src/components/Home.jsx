@@ -21,7 +21,7 @@ function Home({ searchResults }) {
 
     return (
 
-        <div className="bg-black text-white p-4">
+        <div className="bg-[#070B14] text-white p-4">
             <div className="max-w-7xl mx-auto">
 
                 <h2 className="text-white text-4xl font-bold mb-6">

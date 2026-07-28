@@ -153,7 +153,7 @@ function CategoryNav() {
                                                 <button
                                                     key={genre.id}
                                                     onClick={() => navigate(`/${path}/genre/${genre.id}/${genre.name}`)}
-                                                    className="w-full text-left px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#3B82F6] transition duration-200 " onMouseEnter={() => setShowGenres(true)}
+                                                    className="w-full text-left px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#3B82F6] transition duration-200 cursor-pointer" onMouseEnter={() => setShowGenres(true)}
                                                 >
                                                     {genre.name}
                                                 </button>
