@@ -1,8 +1,12 @@
 import { useRef, useState } from "react"
 import signup_bg from "../images/signup_bg.png"
+import { useNavigate } from "react-router-dom";
 import { checkValidData } from "../utils/validate"
+import { auth } from "../utils/firebase"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 
 function Signup() {
+    const navigate = useNavigate();
     const [isSignInForm, setIsSignInForm] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
     const email = useRef(null)
@@ -13,8 +17,43 @@ function Signup() {
     }
 
     const handleBtnClick = () => {
-        const message = checkValidData(email.current.value, password.current.value)    
-        setErrorMessage(message)    
+        const message = checkValidData(email.current.value, password.current.value)
+        setErrorMessage(message)
+
+        if (message) return
+
+        if (!isSignInForm) {
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+                    navigate("/movies/popular")
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + ":" + errorMessage)
+                    // ..
+                })
+
+        } else {
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    navigate("/movies/popular")
+                    
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + ":" + errorMessage)
+                });
+
+
+        }
     }
 
     return (
@@ -30,20 +69,26 @@ function Signup() {
                 <h2 className="text-3xl mb-4">{isSignInForm ? "Sign in" : "Sign up"}</h2>
                 <div className="flex flex-col gap-2  ">
                     <label htmlFor="email" className="text-white ">Email</label>
-                    <input 
-                    type="email" 
-                    name="email" 
-                    autoComplete="username"
-                    ref={email}
-                    className="px-2 py-1 focus:outline-none bg-[#111827] border-[2px] border-[#334155]  focus-within:border-[#3B82F6] rounded-md cursor-pointer text-white" />
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        autoComplete="username"
+                        ref={email}
+                        className="px-2 py-1 focus:outline-none bg-[#111827] border-[2px] border-[#334155]  focus:border-[#3B82F6] rounded-md cursor-pointer text-white" />
 
                     <label htmlFor="password" className="text-white mt-4">Password</label>
-                    <input 
-                    type="password" 
-                    name="password" 
-                    autoComplete="current-password"
-                    ref={password}
-                    className="px-2 py-1 focus:outline-none bg-[#111827] border-[2px] border-[#334155]  focus-within:border-[#3B82F6] rounded-md cursor-pointer text-white" />
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        autoComplete={
+                            isSignInForm
+                                ? "current-password"
+                                : "new-password"
+                        }
+                        ref={password}
+                        className="px-2 py-1 focus:outline-none bg-[#111827] border-[2px] border-[#334155]  focus:border-[#3B82F6] rounded-md cursor-pointer text-white" />
 
                     <p className="text-lg fond-bold text-red-600">{errorMessage}</p>
 
@@ -51,7 +96,7 @@ function Signup() {
                         <button onClick={handleBtnClick} className="text-xl bg-[#3B82F6] px-4 py-2 rounded-lg cursor-pointer">{isSignInForm ? "Sign in" : "Sign up"}</button>
                     </div>
 
-                    <p onClick={toggleForm} className="cursor-pointer mt-4 ">{!isSignInForm ? "Already a user? Sign in" : "New to the page? Sign up"}</p>
+                    <p onClick={toggleForm} className="cursor-pointer mt-4 text-lg">{!isSignInForm ? "Already a user? Sign in" : "New to the page? Sign up"}</p>
                 </div>
 
             </form>
