@@ -11,7 +11,7 @@ import Layout from "./components/Layout";
 import userContext from "./utils/userContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -45,19 +45,22 @@ function App() {
 
         <Routes>
 
-          {/* Signup/Login page without Header and Footer */}
+          
           <Route
             path="/"
             element={<Signup />}
           />
 
 
-          {/* Pages with Header, CategoryNav and Footer */}
+          
           <Route
             element={
-              <Layout
-                setSearchResults={setSearchResults}
-              />
+              <ProtectedRoute>
+                <Layout
+                  setSearchResults={setSearchResults}
+                />
+              </ProtectedRoute>
+
             }
           >
 
@@ -65,78 +68,116 @@ function App() {
             <Route
               path="/home"
               element={
-                <Home
-                  searchResults={searchResults}
-                />
+                <ProtectedRoute>
+                  <Home
+                    searchResults={searchResults}
+                  />
+                </ProtectedRoute>
+
               }
             />
 
 
             <Route
               path="/movie/:movieId"
-              element={<MovieDetails />}
+              element={<ProtectedRoute>
+                <MovieDetails />
+              </ProtectedRoute>
+              }
             />
 
 
             <Route
               path="/search"
               element={
-                <SearchResults
-                  searchResults={searchResults}
-                />
+                <ProtectedRoute>
+                  <SearchResults
+                    searchResults={searchResults}
+                  />
+                </ProtectedRoute>
               }
             />
 
 
             <Route
               path="/movies/:category"
-              element={<Movies />}
+              element={
+                <ProtectedRoute>
+                  <Movies />
+                </ProtectedRoute>
+              }
             />
 
 
             <Route
               path="/movies/genre/:genreId"
-              element={<Movies />}
+              element={<ProtectedRoute>
+                <Movies />
+              </ProtectedRoute>
+              }
             />
 
 
             <Route
               path="/movies/genre/:genreId/:genreName"
-              element={<Movies />}
+              element={<ProtectedRoute>
+                <Movies />
+              </ProtectedRoute>
+              
+            }
             />
 
 
             <Route
               path="/tv-shows"
-              element={<TvShows />}
+              element={<ProtectedRoute>
+                <TvShows />
+              </ProtectedRoute>
+              
+            }
             />
 
 
             <Route
               path="/tv-shows/:category"
-              element={
+              element={<ProtectedRoute>
                 <TvShows
                   searchResults={searchResults}
                 />
+              </ProtectedRoute>
+                
               }
             />
 
 
             <Route
               path="/tv-shows/genre/:genreId"
-              element={<TvShows />}
+              element={<ProtectedRoute>
+                <TvShows />
+              </ProtectedRoute>
+              
+            }
             />
 
 
             <Route
               path="/tv-shows/genre/:genreId/:genreName"
-              element={<TvShows />}
+              element={
+                <ProtectedRoute>
+                  <TvShows />
+                </ProtectedRoute>
+              
+            }
             />
 
 
             <Route
               path="/tv-show/:showId"
-              element={<ShowDetails />}
+              element={<ProtectedRoute>
+                <ShowDetails />
+              </ProtectedRoute>
+              
+            }
             />
 
 

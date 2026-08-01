@@ -81,7 +81,7 @@ function Header({ setSearchResults }) {
                             Movies
                         </Link>
                         </li>
-                        <li><Link to="/tv-shows" onClick={() => setMenuOpen(false)} className=" py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#3B82F6] transition duration-200 cursor-pointer">
+                        <li><Link to="/tv-shows/popular" onClick={() => setMenuOpen(false)} className=" py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#3B82F6] transition duration-200 cursor-pointer">
                             TV Shows
                         </Link></li>
                     </ul>
@@ -99,7 +99,7 @@ function Header({ setSearchResults }) {
                         </Link>
                     </li>
                     <li className="hover:text-[#60A5FA]">
-                        <Link to="/tv-shows" onClick={() => setMenuOpen(false)}>
+                        <Link to="/tv-shows/popular" onClick={() => setMenuOpen(false)}>
                             TV Shows
                         </Link>
                     </li>
