@@ -16,6 +16,10 @@ function MovieDetails() {
     const carouselRef = useRef()
     const similarRef = useRef()
 
+    const filteredCast = cast?.cast?.filter(
+        (actor) => actor.profile_path
+    );
+
     useEffect(() => {
         const fetchMovieDetails = async (movieId) => {
             const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`)
@@ -130,7 +134,8 @@ function MovieDetails() {
                             <div ref={carouselRef} className=" flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth ">
 
                                 {
-                                    cast.cast?.filter((actor) => actor.profile_path).map((actor) => (
+                                    filteredCast?.length > 0 &&
+                                    filteredCast.map((actor) => (
                                         <div
                                             key={actor.id}
                                             className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"

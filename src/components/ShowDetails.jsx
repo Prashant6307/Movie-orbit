@@ -180,12 +180,12 @@ function ShowDetails() {
                     <div className="relative p-4" >
                         <h2 className="text-white font-bold text-xl mt-8 ">
                             {
-                                similarShows.results?.length === 0 ? "No similar shows found" : "Similar Shows"
+                                similarShows?.results?.length === 0 ? "No similar shows found" : "Similar Shows"
                             }</h2>
                         <div ref={similarRef} className="mt-8 flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth " >
 
                             {
-                                similarShows.results?.filter((result) => result.poster_path).map((result) => (
+                                similarShows?.results?.filter((result) => result.poster_path).map((result) => (
                                     <div onClick={() => navigate(`/tv-show/${result.id}`)}
                                         key={result.id}
                                         className="min-w-[150px] bg-gray-800 rounded-xl overflow-hidden bg-[#161D2F] border border-[#1E293B] hover:bg-[rgba(59,130,246,0.25)] cursor-pointer"
